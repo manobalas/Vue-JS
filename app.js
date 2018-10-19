@@ -5,6 +5,8 @@ var app = new Vue({
     description: '',
     author: '',
     users: '',
+    errr: false,
+    suc: false,
     first_name: '',
     last_name: '',
     mobile_number: ''
@@ -41,7 +43,29 @@ var app = new Vue({
                 mobile_number: submitEvent.target.elements.mobile_number.value
             })
             .then(function (response) {
-                console.log(response);
+                
+              if(response.data == "validation_failed"){
+                    app.errr = true;
+                    app.suc = false;
+                    setTimeout(function() {
+                        app.errr = false;
+                    }, 2000);
+                }
+                
+                if(response.data == "success") {
+                    app.errr = false;
+                    app.suc = true;
+                    app.loadUsers();
+                    setTimeout(function() {
+                        app.suc = false;
+                    }, 2000);
+                }
+                
+                if(response.data == "error") {
+                    app.errr = true;
+                    console.log(response);
+                }
+              
             })
             .catch(function (error) {
                 console.log(error);
