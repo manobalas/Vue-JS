@@ -6,18 +6,37 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+            /* Enter and leave animations can use different */
+            /* durations and timing functions.              */
+            .slide-fade-enter-active {
+              transition: all .3s ease;
+            }
+            .slide-fade-leave-active {
+              transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+            }
+            .slide-fade-enter, .slide-fade-leave-to
+            /* .slide-fade-leave-active below version 2.1.8 */ {
+              transform: translateX(10px);
+              opacity: 0;
+            }
+        </style>
     </head>
 
 <body>
     <div class="row" id="app">
         <div class="container">
             <h4>{{ appName }}</h4>
-            <p>{{ description }} by {{ author }}</p>
+            <p>{{ description }} by {{ author }} <br>GitHub Link : <a href="https://github.com/manobalas/Vue-JS/">https://github.com/manobalas/Vue-JS/</a></p>
             <hr>
             <p class="hide-on-med-and-up show-on-small">If you are accessing this app in mobile, you cant able to add the user, view in Desktop</p>
             <div class="col s12 m4 hide-on-small-only">
                 <h5>Add User</h5>
                 <p>Fill the below form to get added in the table.</p>
+                <transition name="slide-fade">
+                    <p v-if="errr" style="color: red; margin-bottom: 20px" >Kinldy fill all the inputs.</p>
+                    <p v-if="suc" style="color: green; margin-bottom: 20px" >Data Inserted Successfully</p>
+                </transition>
                     <form @submit.prevent="createUser">
                     <div class="row">
                         <div class="input-field col s12 m6">
@@ -58,7 +77,6 @@
                       </tr>
                     </tbody>
                 </table>
-                
             </div>
         </div>
     </div>
